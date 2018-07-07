@@ -51,3 +51,7 @@ To extract images and audio directly from `ffmpeg` into `python`
 * https://stackoverflow.com/questions/13294919/can-you-stream-images-to-ffmpeg-to-construct-a-video-instead-of-saving-them-t
 * http://zulko.github.io/blog/2013/09/27/read-and-write-video-frames-in-python-using-ffmpeg/
 * http://zulko.github.io/blog/2013/10/04/read-and-write-audio-files-in-python-using-ffmpeg/
+
+https://superuser.com/questions/135117/how-to-convert-video-to-images
+https://stackoverflow.com/questions/43650860/pipe-pil-images-to-ffmpeg-stdin-python
+https://ffmpeg.org/ffmpeg.html

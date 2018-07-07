@@ -5,7 +5,12 @@ services:
     build:
       context: ./docker/
       dockerfile: mediaTimelineRenderer.dockerfile
+    environment:
+      - PATH_HOST_MEDIA
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - .:/mediaTimelineRenderer:ro
-    command: --help
+      - ${PATH_HOST_MEDIA}:${PATH_HOST_MEDIA}
+    command: ${PATH_HOST_MEDIA} --postmortem True --log_level 10
+
+# docker-compose run --rm mediatimelinerenderer
