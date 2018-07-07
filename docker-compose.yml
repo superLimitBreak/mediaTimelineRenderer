@@ -1,0 +1,11 @@
+version: '3.6'
+
+services:
+  mediatimelinerenderer:
+    build:
+      context: ./docker/
+      dockerfile: mediaTimelineRenderer.dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/mediaTimelineRenderer:ro
+    command: --help

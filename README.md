@@ -34,11 +34,14 @@ Possible output of `x2` and `x4` images for retina displays?
 It would be good if the core `python` program was containerised (derived from an `alpine` container) and referenced a pure `ffmpeg` container.
 
 https://forums.docker.com/t/how-can-i-run-docker-command-inside-a-docker-container/337/2
+https://stackoverflow.com/a/41005007/3356840
+named pipes on windows? https://stackoverflow.com/a/47819855/3356840
 
 ```bash
     docker pull jrottenberg/ffmpeg
     docker run --rm -it jrottenberg/ffmpeg
     docker run -it -v /var/run/docker.sock:/var/run/docker.sock ubuntu:latest sh -c "apt-get update ; apt-get install docker.io -y ; bash"
+    # Windows -v //var/run/docker.sock:/var/run/docker.sock
 ```
 
 ## Python media extraction references
