@@ -1,0 +1,5 @@
+pillow
+hachoir3
+
+pytest
+ptvsd
