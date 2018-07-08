@@ -29,6 +29,13 @@ def get_args():
 
     parser.add_argument('path_media', action='store', help='', default='./')
 
+    parser.add_argument('--image_format', action='store', help='', default='png')
+    parser.add_argument('--image_height', type=int, action='store', help='', default=64)
+    parser.add_argument('--pixels_per_second', type=int, action='store', help='', default=8)
+    parser.add_argument('--command_ffmpeg', action='store', help='', default='ffmpeg -loglevel quiet')
+
+    parser.add_argument('--force', action='store_true', help='', default=False)
+
     parser.add_argument('--config', action='store', help='', default=DEFAULT_CONFIG_FILENAME)
 
     parser.add_argument('--vscode_debugger', action='store', help='attach to vscode')
@@ -51,8 +58,12 @@ def get_args():
 # Main -------------------------------------------------------------------------
 
 def main(**kwargs):
+    import os
+    PATH_HOST_MEDIA = os.getenv('PATH_HOST_MEDIA')
+    kwargs['command_ffmpeg'] = f"""docker run --rm -v {PATH_HOST_MEDIA}:{PATH_HOST_MEDIA}:ro jrottenberg/ffmpeg -loglevel quiet"""
+
     from mediaTimelineRenderer.filescan import process_folder
-    process_folder(kwargs['path_media'])
+    process_folder(**kwargs)
 
 
 if __name__ == "__main__":

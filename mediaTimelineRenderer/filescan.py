@@ -20,15 +20,17 @@ def process_folder(path_media='./', **kwargs):
         process_file(file_item, **kwargs)
 
 
-def process_file(file_item, image_height=64, pixels_per_second=8, image_format='png', **kwargs):
-    image_filename = f'{file_item.abspath}.{image_format}'
+def process_file(file_item, **kwargs):
+    image_filename = f'{file_item.abspath}.{kwargs["image_format"]}'
     if (
+        not kwargs['force']
+        and
         os.path.isfile(image_filename)
         and
         file_item.stats.st_mtime == os.path.getmtime(image_filename)
     ):
         log.debug(f'{image_filename} up to date')
-        #return
+        return
     log.info(f'{image_filename} missing or mtime missmatch: Regenerating')
     metadata = hachoir_metadata(file_item.abspath)
     mime_type = metadata.get('mime_type')
@@ -36,11 +38,11 @@ def process_file(file_item, image_height=64, pixels_per_second=8, image_format='
         log.warn(f'unknown mime type {mime_type} {file_item.relative}')
         return
     duration = metadata.get('duration').total_seconds()
-    timeline_image = PIL.Image.new('RGB', (int(pixels_per_second * duration), image_height))
+    timeline_image = PIL.Image.new('RGB', (int(kwargs['pixels_per_second'] * duration), kwargs['image_height']))
     if 'video' in mime_type:
-        render_video_to_image(file_item.abspath, timeline_image)
+        render_video_to_image(file_item.abspath, metadata, timeline_image, **kwargs)
     elif 'audio' in mime_type:
-        render_audio_to_image(file_item.abspath, timeline_image)
+        render_audio_to_image(file_item.abspath, metadata, timeline_image, **kwargs)
     timeline_image.save(image_filename)
     os.utime(image_filename, (file_item.stats.st_mtime, file_item.stats.st_mtime))
     # TODO: Future feature: consider scaling down this image for x2 and x4 retina image sourcesets?
