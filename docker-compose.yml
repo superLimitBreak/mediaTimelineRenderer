@@ -11,6 +11,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - .:/mediaTimelineRenderer:ro
       - ${PATH_HOST_MEDIA}:${PATH_HOST_MEDIA}
-    command: ${PATH_HOST_MEDIA} --postmortem True --log_level 10
+    command: ${PATH_HOST_MEDIA} --postmortem True --log_level 10 --command_ffmpeg='docker run --rm -v {path_media}:{path_media}:ro jrottenberg/ffmpeg -loglevel quiet'
 
 # docker-compose run --rm mediatimelinerenderer

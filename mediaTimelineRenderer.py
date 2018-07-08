@@ -52,16 +52,17 @@ def get_args():
         kwargs = {k: v if v is not None else config.get(k) for k, v in kwargs.items()}
         kwargs.update({k: v for k, v in config.items() if k not in kwargs})
 
+    # Format strings
+    for key, value in kwargs.items():
+        if isinstance(value, str):
+            kwargs[key] = value.format(**kwargs)
+
     return kwargs
 
 
 # Main -------------------------------------------------------------------------
 
 def main(**kwargs):
-    import os
-    PATH_HOST_MEDIA = os.getenv('PATH_HOST_MEDIA')
-    kwargs['command_ffmpeg'] = f"""docker run --rm -v {PATH_HOST_MEDIA}:{PATH_HOST_MEDIA}:ro jrottenberg/ffmpeg -loglevel quiet"""
-
     from mediaTimelineRenderer.filescan import process_folder
     process_folder(**kwargs)
 
