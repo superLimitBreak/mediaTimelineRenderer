@@ -23,7 +23,7 @@ def process_folder(path_media='./', search_filter=FILTER_MEDIA_FILE, **kwargs):
 def watch_folder(**kwargs):
     log.info(f'Watching for changes {kwargs["path_media"]}')
     def onchange_function(*args, **kwargs):
-        assert False
+        raise NotImplementedError('TODO')
         #process_file(file_item, **kwargs)
     file_scan_diff_thread(
         kwargs['path_media'],

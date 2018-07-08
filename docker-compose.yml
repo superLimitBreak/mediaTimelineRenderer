@@ -1,6 +1,10 @@
 version: '3.6'
 
 services:
+  ffmpeg:
+    # just here to download the ffmpeg image automatically
+    image: jrottenberg/ffmpeg
+
   mediatimelinerenderer:
     build:
       context: ./docker/
