@@ -29,16 +29,18 @@ def get_args():
 
     parser.add_argument('path_media', action='store', help='', default='./')
 
+    parser.add_argument('--daemon_scan_interval_seconds', type=int, action='store', help='', default=0)
+
     parser.add_argument('--image_format', action='store', help='', default='png')
     parser.add_argument('--image_height', type=int, action='store', help='', default=64)
-    parser.add_argument('--pixels_per_second', type=int, action='store', help='', default=8)
+    parser.add_argument('--pixels_per_second', type=int, action='store', help='The number of horizontal pixels that represent a second', default=8)
     parser.add_argument('--command_ffmpeg', action='store', help='', default='ffmpeg -loglevel quiet')
 
-    parser.add_argument('--force', action='store_true', help='', default=False)
+    parser.add_argument('--force', action='store_true', help='ignore file mtimes and regenerate all timelines', default=False)
 
     parser.add_argument('--config', action='store', help='', default=DEFAULT_CONFIG_FILENAME)
 
-    parser.add_argument('--vscode_debugger', action='store', help='attach to vscode')
+    parser.add_argument('--vscode_debugger_port', type=int, action='store', help='attach to vscode')
     parser.add_argument('--postmortem', action='store', help='Enter debugger on exception')
     parser.add_argument('--log_level', type=int, help='log level')
 
@@ -63,17 +65,18 @@ def get_args():
 # Main -------------------------------------------------------------------------
 
 def main(**kwargs):
-    from mediaTimelineRenderer.filescan import process_folder
+    from mediaTimelineRenderer.filescan import process_folder, watch_folder
     process_folder(**kwargs)
-
+    if kwargs['daemon_scan_interval_seconds']:
+        watch_folder(**kwargs)
 
 if __name__ == "__main__":
     kwargs = get_args()
     logging.basicConfig(level=kwargs['log_level'])
 
-    if kwargs.get('vscode_debugger'):
+    if kwargs.get('vscode_debugger_port'):
         import ptvsd
-        ptvsd.enable_attach("my_secret", address=('0.0.0.0', 3000))
+        ptvsd.enable_attach("my_secret", address=('0.0.0.0', kwargs.get('vscode_debugger_port')))
         #ptvsd.wait_for_attach()
 
     def launch():

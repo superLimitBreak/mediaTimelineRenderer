@@ -4,7 +4,7 @@ import re
 
 import PIL.Image
 
-from calaldees.misc import fast_scan, fast_scan_regex_filter
+from calaldees.misc import fast_scan, fast_scan_regex_filter, file_scan_diff_thread
 
 from .hachoir import hachoir_metadata
 from .renderer_audio import render_audio_to_image
@@ -15,9 +15,22 @@ log = logging.getLogger(__name__)
 FILTER_MEDIA_FILE = fast_scan_regex_filter(r'.*(mp4|wav|mp3|ogg)$')
 
 
-def process_folder(path_media='./', **kwargs):
-    for file_item in fast_scan(path_media, search_filter=FILTER_MEDIA_FILE):
+def process_folder(path_media='./', search_filter=FILTER_MEDIA_FILE, **kwargs):
+    for file_item in fast_scan(path_media, search_filter=search_filter):
         process_file(file_item, **kwargs)
+
+
+def watch_folder(**kwargs):
+    log.info(f'Watching for changes {kwargs["path_media"]}')
+    def onchange_function(*args, **kwargs):
+        assert False
+        #process_file(file_item, **kwargs)
+    file_scan_diff_thread(
+        kwargs['path_media'],
+        onchange_function=onchange_function,
+        rescan_interval=kwargs['daemon_scan_interval_seconds'],
+        search_filter=FILTER_MEDIA_FILE,
+    )
 
 
 def process_file(file_item, **kwargs):
