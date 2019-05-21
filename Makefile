@@ -1,6 +1,6 @@
 ENV=_env
-PYTHON_VERSION:=3.6
-DEPENDENCIES_PYTHON:=docker/mediaTimelineRenderer.pip
+PYTHON_VERSION:=3
+DEPENDENCIES_PYTHON:=mediaTimelineRenderer.pip
 PYTHON:=$(ENV)/bin/python$(PYTHON_VERSION)
 PIP:=$(ENV)/bin/pip$(PYTHON_VERSION)
 PYTEST:=$(ENV)/bin/py.test
@@ -29,6 +29,10 @@ upgrade_pip:
 .PHONY: run
 run: config.json
 	$(PYTHON) mediaTimelineRenderer.py
+
+.PHONY: build
+build:
+	docker build --tag mediatimelinerenderer:latest ./
 
 .PHONY: test
 	$(PYTEST) .
