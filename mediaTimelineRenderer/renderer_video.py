@@ -5,8 +5,6 @@ from io import BytesIO
 
 from PIL import Image, ImageSequence
 
-from .hachoir import hachoir_metadata
-
 log = logging.getLogger(__name__)
 
 
