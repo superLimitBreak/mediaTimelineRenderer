@@ -2,7 +2,7 @@ import os
 import json
 import logging
 
-from calaldees.misc import postmortem
+from calaldees.debug import postmortem
 
 VERSION = 'v0.0.0'
 
@@ -67,7 +67,7 @@ def get_args():
 # Main -------------------------------------------------------------------------
 
 def main(**kwargs):
-    from mediaTimelineRenderer.filescan import process_folder, watch_folder
+    from mediaTimelineRendererLib.filescan import process_folder, watch_folder
     process_folder(**kwargs)
     if kwargs['daemon_scan_interval_seconds']:
         watch_folder(**kwargs)

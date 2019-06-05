@@ -4,7 +4,8 @@ import re
 
 import PIL.Image
 
-from calaldees.misc import fast_scan, fast_scan_regex_filter, file_scan_diff_thread
+from calaldees.files.scan import fast_scan, fast_scan_regex_filter
+from calaldees.files.scan_thread import file_scan_diff_thread
 
 from .hachoir import hachoir_metadata
 from .renderer_audio import render_audio_to_image
