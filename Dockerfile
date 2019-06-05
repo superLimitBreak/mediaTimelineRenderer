@@ -1,6 +1,10 @@
-FROM python:alpine as base
+FROM python:alpine3.8 as base
 
-COPY --from=jrottenberg/ffmpeg /usr/local /usr/local
+# ffmpeg:alpine is built against alpine 3.8 - so we need the python base image in sync
+COPY --from=jrottenberg/ffmpeg:4.1-alpine /usr/local /usr/local
+RUN apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.0 libssl1.0 libgomp expat git
+ENV PATH="/usr/local/bin:${PATH}"
+RUN ffmpeg -h
 
 COPY mediaTimelineRenderer.pip requirements.pip
 
