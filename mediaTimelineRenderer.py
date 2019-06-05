@@ -43,7 +43,7 @@ def get_args():
 
     parser.add_argument('--vscode_debugger_port', type=int, action='store', help='attach to vscode')
     parser.add_argument('--postmortem', action='store', help='Enter debugger on exception')
-    parser.add_argument('--log_level', type=int, help='log level')
+    parser.add_argument('--log_level', type=int, help='log level', default=logging.INFO)
 
     parser.add_argument('--version', action='version', version=VERSION)
 

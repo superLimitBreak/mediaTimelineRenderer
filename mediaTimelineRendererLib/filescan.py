@@ -22,7 +22,7 @@ def process_folder(path_media='./', search_filter=FILTER_MEDIA_FILE, **kwargs):
 
 
 def watch_folder(**kwargs):
-    log.info(f'Watching for changes {kwargs["path_media"]}')
+    log.info(f'Watching for changes {kwargs["path_media"]} with interval of {kwargs["daemon_scan_interval_seconds"]} seconds')
     def onchange_function(*args, **kwargs):
         raise NotImplementedError('TODO')
         #process_file(file_item, **kwargs)

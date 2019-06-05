@@ -1,6 +1,9 @@
+import logging
 import subprocess
 
 from PIL import ImageDraw
+
+log = logging.getLogger(__name__)
 
 
 # https://stackoverflow.com/a/434411/3356840
@@ -19,8 +22,10 @@ def render_audio_to_image(filename, metadata, timeline_image, **kwargs):
     """
     http://zulko.github.io/blog/2013/10/04/read-and-write-audio-files-in-python-using-ffmpeg/
     """
+    log.debug(f'Rendering audio - {filename}')
     command_ffmpeg_pipe = f"""{kwargs['command_ffmpeg']} -i "{filename}" -f s16le -acodec pcm_s16le -ac 1 -ar {kwargs['pixels_per_second']} -"""
     # -ar 44100
+    log.debug(command_ffmpeg_pipe)
 
     # TODO: At the moment we are using the hard pixels per seconds as the audio rate in hz. This is leading to spiking results. We could either get ffmpeg to smooth properly or take in more data and average it
 
