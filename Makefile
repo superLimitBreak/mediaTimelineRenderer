@@ -1,3 +1,5 @@
+CONTAINER_NAME=superlimitbreak/mediatimelinerenderer:latest
+
 ENV=_env
 PYTHON_VERSION:=3
 DEPENDENCIES_PYTHON:=mediaTimelineRenderer.pip
@@ -32,7 +34,11 @@ run: config.json
 
 .PHONY: build
 build:
-	docker build --tag mediatimelinerenderer:latest ./
+	docker build --tag ${CONTAINER_NAME} .
+
+.PHONY: push
+push:
+	docker push ${CONTAINER_NAME}
 
 .PHONY: test
 	$(PYTEST) .

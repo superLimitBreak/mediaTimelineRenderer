@@ -1,5 +1,6 @@
-import logging
+import os
 import json
+import logging
 
 from calaldees.misc import postmortem
 
@@ -49,10 +50,11 @@ def get_args():
     kwargs = vars(parser.parse_args())
 
     # Overlay config defaults from file
-    with open(kwargs['config'], 'rt') as config_filehandle:
-        config = json.load(config_filehandle)
-        kwargs = {k: v if v is not None else config.get(k) for k, v in kwargs.items()}
-        kwargs.update({k: v for k, v in config.items() if k not in kwargs})
+    if os.path.isfile(kwargs['config']):
+        with open(kwargs['config'], 'rt') as config_filehandle:
+            config = json.load(config_filehandle)
+            kwargs = {k: v if v is not None else config.get(k) for k, v in kwargs.items()}
+            kwargs.update({k: v for k, v in config.items() if k not in kwargs})
 
     # Format strings
     for key, value in kwargs.items():
