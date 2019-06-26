@@ -18,7 +18,7 @@ def render_video_to_image(filename, metadata, timeline_image, **kwargs):
     rate = 1/(timeline_image.height/kwargs['pixels_per_second'])
 
     def image_generator():
-        frame_size_bytes = timeline_image_frame_width * timeline_image.height * 3  # '3' is RGB bytes per pixel
+        frame_size_bytes = timeline_image_frame_width * timeline_image.height * 3  # '3' is RGB bytes per pixel rgb24
         command_ffmpeg_pipe = f"""{kwargs['command_ffmpeg']} -i "{filename}" -filter:v scale={timeline_image_frame_width}:{timeline_image.height} -r {rate} -vcodec rawvideo -pix_fmt rgb24 -f image2pipe -"""
         log.debug(command_ffmpeg_pipe)
         with subprocess.Popen(command_ffmpeg_pipe, stdout=subprocess.PIPE, bufsize=2**16, shell=True) as pipe:
@@ -29,4 +29,5 @@ def render_video_to_image(filename, metadata, timeline_image, **kwargs):
                 yield Image.frombytes('RGB', (timeline_image_frame_width, timeline_image.height), image_data, 'raw')
 
     for index, image in enumerate(image_generator()):
-        timeline_image.paste(image, (index * timeline_image.height, 0))
+        # ffmpeg seems to duplicate the first frame. Using `index-1` solves this
+        timeline_image.paste(image, ((index-1) * timeline_image.height, 0))
