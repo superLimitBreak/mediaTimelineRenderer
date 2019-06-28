@@ -15,7 +15,7 @@ def bytes_to_short_unsigned_ints(data):
     return map(byte_pair_to_short_unsigned_ints, grouper(data, 2))
 
 
-def render_audio_to_image(filename, metadata, timeline_image, pixels_per_second=8, audio_input_samples_per_pixel=16, **kwargs):
+def render_audio_to_image(filename, metadata, timeline_image, pixels_per_second=8, audio_input_samples_per_pixel=32, **kwargs):
     """
     http://zulko.github.io/blog/2013/10/04/read-and-write-audio-files-in-python-using-ffmpeg/
     """

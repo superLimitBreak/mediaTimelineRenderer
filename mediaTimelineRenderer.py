@@ -36,7 +36,7 @@ def get_args():
     parser.add_argument('--image_height', type=int, action='store', help='', default=64)
     parser.add_argument('--pixels_per_second', type=int, action='store', help='The number of horizontal pixels that represent a second', default=8)
 
-    parser.add_argument('--audio_input_samples_per_pixel', type=int, action='store', help='The number of horizontal pixels that represent a second', default=16)
+    parser.add_argument('--audio_input_samples_per_pixel', type=int, action='store', help='The number of horizontal pixels that represent a second', default=32)
 
     parser.add_argument('--command_ffmpeg', action='store', help='', default='ffmpeg -loglevel quiet')
 
