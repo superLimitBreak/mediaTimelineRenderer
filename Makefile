@@ -45,7 +45,7 @@ push:
 
 .PHONY: cloc
 cloc:
-	cloc --exclude-dir=$(ENV) ./
+	cloc --vcs=git
 
 
 # Clean ------------------------------------------------------------------------
