@@ -6,12 +6,12 @@ RUN apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.0 li
 ENV PATH="/usr/local/bin:${PATH}"
 RUN ffmpeg -h
 
-COPY mediaTimelineRenderer.pip requirements.pip
+COPY requirements.txt requirements.txt
 
 RUN apk add --no-cache jpeg-dev zlib-dev
 RUN apk add --no-cache \
         --virtual .build-deps build-base linux-headers git &&\
-    pip3 install --no-cache-dir -r requirements.pip &&\
+    pip3 install --no-cache-dir -r requirements.txt &&\
     apk del .build-deps
 
 WORKDIR /mediaTimelineRenderer

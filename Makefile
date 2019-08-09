@@ -2,7 +2,7 @@ CONTAINER_NAME=superlimitbreak/mediatimelinerenderer:latest
 
 ENV=_env
 PYTHON_VERSION:=3
-DEPENDENCIES_PYTHON:=mediaTimelineRenderer.pip
+DEPENDENCIES_PYTHON:=requirements.txt
 PYTHON:=$(ENV)/bin/python$(PYTHON_VERSION)
 PIP:=$(ENV)/bin/pip$(PYTHON_VERSION)
 PYTEST:=$(ENV)/bin/py.test

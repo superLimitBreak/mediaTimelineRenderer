@@ -1,5 +1,5 @@
 pillow
-hachoir3
+hachoir
 
 pytest
 ptvsd
